@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\apdp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|c:\\users\\admin\\downloads\\apdp\\unittest\\controllertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\controllertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|c:\\users\\admin\\downloads\\apdp\\unittest\\csvservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\csvservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|c:\\users\\admin\\downloads\\apdp\\unittest\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A410E27-0FD8-487A-B415-0B7E6EBC5B3D}|UnitTest\\UnitTest.csproj|solutionrelative:unittest\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6C041511-0A4F-4CDA-BC20-347149D5A6B6}|lolapdp\\lolapdp.csproj|c:\\users\\admin\\downloads\\apdp\\lolapdp\\controllers\\facultycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6C041511-0A4F-4CDA-BC20-347149D5A6B6}|lolapdp\\lolapdp.csproj|solutionrelative:lolapdp\\controllers\\facultycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -186,11 +198,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CSVServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\CSVServiceTests.cs",
+              "RelativeDocumentMoniker": "UnitTest\\CSVServiceTests.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\CSVServiceTests.cs",
+              "RelativeToolTip": "UnitTest\\CSVServiceTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T11:54:46.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\ControllerTests.cs",
+              "RelativeDocumentMoniker": "UnitTest\\ControllerTests.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\ControllerTests.cs",
+              "RelativeToolTip": "UnitTest\\ControllerTests.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAowBUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T11:54:38.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "UnitTest\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\apdp\\UnitTest\\UnitTest1.cs",
+              "RelativeToolTip": "UnitTest\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T11:45:56.261Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -198,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "Authentication.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\Authentication.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\Authentication.cs",
@@ -210,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "IUserManagement.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\IUserManagement.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\IUserManagement.cs",
@@ -222,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "ICourseManagement.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\ICourseManagement.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\ICourseManagement.cs",
@@ -234,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Program.cs",
               "RelativeDocumentMoniker": "lolapdp\\Program.cs",
@@ -246,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Admin\\Index.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Admin\\Index.cshtml",
@@ -258,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Account\\Register.cshtml",
@@ -270,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "ManageFaculty.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Admin\\ManageFaculty.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Admin\\ManageFaculty.cshtml",
@@ -282,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "FacultyController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\FacultyController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\FacultyController.cs",
@@ -295,7 +346,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Course.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\Course.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\Course.cs",
@@ -307,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\AccountController.cs",
@@ -319,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\AdminController.cs",
@@ -331,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CSVService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Services\\CSVService.cs",
               "RelativeDocumentMoniker": "lolapdp\\Services\\CSVService.cs",
@@ -343,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "CSVService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\CSVService.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\CSVService.cs",
@@ -355,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "CourseController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\CourseController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\CourseController.cs",
@@ -367,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\User.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\User.cs",
@@ -379,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "Grade.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\Grade.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\Grade.cs",
@@ -391,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "IAuthentication.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\IAuthentication.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\IAuthentication.cs",
@@ -403,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\ErrorViewModel.cs",
@@ -415,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "CourseManagement.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\CourseManagement.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\CourseManagement.cs",
@@ -427,7 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "StudentCourse.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\StudentCourse.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\StudentCourse.cs",
@@ -439,7 +490,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "UserManagement.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\UserManagement.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\UserManagement.cs",
@@ -451,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "Student.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\Student.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\Student.cs",
@@ -463,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "lolapdp\\Data\\ApplicationDbContext.cs",
@@ -475,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "StudentController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\StudentController.cs",
@@ -487,7 +538,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "lolapdp\\Controllers\\HomeController.cs",
@@ -499,7 +550,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "Faculty.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Models\\Faculty.cs",
               "RelativeDocumentMoniker": "lolapdp\\Models\\Faculty.cs",
@@ -511,7 +562,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Student\\Index.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Student\\Index.cshtml",
@@ -523,7 +574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Course\\Edit.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Course\\Edit.cshtml",
@@ -535,7 +586,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "account.css",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\wwwroot\\css\\account.css",
               "RelativeDocumentMoniker": "lolapdp\\wwwroot\\css\\account.css",
@@ -547,7 +598,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "Dashboard.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Home\\Dashboard.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Home\\Dashboard.cshtml",
@@ -559,7 +610,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Course\\Create.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Course\\Create.cshtml",
@@ -571,7 +622,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Account\\Login.cshtml",
@@ -583,7 +634,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Shared\\_Layout.cshtml",
@@ -595,7 +646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Home\\Index.cshtml",
@@ -607,7 +658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Course\\Index.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Course\\Index.cshtml",
@@ -619,7 +670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "Add.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Course\\Add.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Course\\Add.cshtml",
@@ -631,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Course\\Delete.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Course\\Delete.cshtml",
@@ -643,7 +694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "ManageCourses.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Admin\\ManageCourses.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Admin\\ManageCourses.cshtml",
@@ -655,7 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Admin\\Delete.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Admin\\Delete.cshtml",
@@ -667,7 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "ManageUsers.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Admin\\ManageUsers.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Admin\\ManageUsers.cshtml",
@@ -679,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 45,
               "Title": "ManageGrades.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Faculty\\ManageGrades.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Faculty\\ManageGrades.cshtml",
@@ -691,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 46,
               "Title": "ViewAssignedCourses.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Faculty\\ViewAssignedCourses.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Faculty\\ViewAssignedCourses.cshtml",
@@ -703,7 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "ViewGrades.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Student\\ViewGrades.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Student\\ViewGrades.cshtml",
@@ -715,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "ViewCourses.cshtml",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\apdp\\lolapdp\\Views\\Student\\ViewCourses.cshtml",
               "RelativeDocumentMoniker": "lolapdp\\Views\\Student\\ViewCourses.cshtml",

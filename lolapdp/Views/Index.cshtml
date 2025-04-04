@@ -1,0 +1,42 @@
+@model IEnumerable<lolapdp.Models.Course>
+@{
+    ViewData["Title"] = "Danh sách khóa học";
+}
+
+<div class="container mt-4">
+    <h2>Danh sách khóa học</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã khóa học</th>
+                                <th>Tên khóa học</th>
+                                <th>Mô tả</th>
+                                <th>Số tín chỉ</th>
+                                <th>Giảng viên</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var course in Model)
+                            {
+                                <tr>
+                                    <td>@course.CourseId</td>
+                                    <td>@course.CourseName</td>
+                                    <td>@course.Description</td>
+                                    <td>@course.Credits</td>
+                                    <td>@course.Faculty</td>
+                                    <td>@(course.IsActive ? "Đang hoạt động" : "Không hoạt động")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

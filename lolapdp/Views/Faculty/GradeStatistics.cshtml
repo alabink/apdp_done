@@ -1,0 +1,140 @@
+@model List<(lolapdp.Models.Course Course, lolapdp.Controllers.FacultyController.GradeDistribution Stats)>
+@{
+    ViewData["Title"] = "Thống kê điểm";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Thống kê điểm các khóa học</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">@item.Course.CourseName (@item.Course.CourseId)</h5>
+                            <button class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("AssignGrade", new { courseId = item.Course.CourseId })'">
+                                <i class="bi bi-pencil-square"></i> Nhập điểm
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <canvas id="chart-@item.Course.CourseId"></canvas>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        Xuất sắc (≥ 90)
+                                        <span class="badge bg-success rounded-pill">@item.Stats.Excellent</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        Giỏi (≥ 70)
+                                        <span class="badge bg-primary rounded-pill">@item.Stats.Good</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        Trung bình (≥ 50)
+                                        <span class="badge bg-warning rounded-pill">@item.Stats.AverageGrade</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        Yếu (&lt; 50)
+                                        <span class="badge bg-danger rounded-pill">@item.Stats.Poor</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <small class="text-muted">
+                                        Tổng số sinh viên: @(item.Stats.Excellent + item.Stats.Good + item.Stats.AverageGrade + item.Stats.Poor)
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @foreach (var item in Model)
+            {
+                <text>
+                new Chart(document.getElementById('chart-@item.Course.CourseId').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Xuất sắc (≥ 90)', 'Giỏi (≥ 70)', 'Trung bình (≥ 50)', 'Yếu (&lt; 50)'],
+                        datasets: [{
+                            data: [@item.Stats.Excellent, @item.Stats.Good, @item.Stats.AverageGrade, @item.Stats.Poor],
+                            backgroundColor: [
+                                '#198754', // success
+                                '#0d6efd', // primary
+                                '#ffc107', // warning
+                                '#dc3545'  // danger
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Phân bố điểm số'
+                            }
+                        }
+                    }
+                });
+                </text>
+            }
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        .card {
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem;
+        }
+
+        .badge {
+            font-weight: 500;
+            padding: 0.5em 0.75em;
+        }
+
+        .badge.bg-warning {
+            color: #000;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 0.75rem 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+} 

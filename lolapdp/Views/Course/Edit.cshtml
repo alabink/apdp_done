@@ -7,139 +7,109 @@
     ViewData["Title"] = "Edit Course";
 }
 
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Edit Course</h5>
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Course</h2>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CourseId" />
+
+                <div class="mb-3">
+                    <label class="form-label">Course Code</label>
+                    <input asp-for="CourseId" class="form-control" readonly />
                 </div>
-                <div class="card-body">
-                    <form asp-action="Edit" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        
-                        <div class="mb-3">
-                            <label asp-for="CourseCode" class="form-label">Course Code</label>
-                            <input asp-for="CourseCode" class="form-control" required maxlength="10" />
-                            <span asp-validation-for="CourseCode" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label asp-for="CourseName" class="form-label">Course Name</label>
-                            <input asp-for="CourseName" class="form-control" required maxlength="100" />
-                            <span asp-validation-for="CourseName" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label asp-for="Description" class="form-label">Description</label>
-                            <textarea asp-for="Description" class="form-control" rows="3" required></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label asp-for="Credits" class="form-label">Credits</label>
-                            <input asp-for="Credits" type="number" class="form-control" required min="1" />
-                            <span asp-validation-for="Credits" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label asp-for="Faculty" class="form-label">Faculty</label>
-                            <select asp-for="Faculty" class="form-select" required>
-                                @if (ViewBag.FacultyList != null)
-                                {
-                                    @foreach (var faculty in ViewBag.FacultyList)
-                                    {
-                                        if (Model.Faculty == faculty.Username)
-                                        {
-                                            <option value="@faculty.Username" selected>@faculty.Username</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@faculty.Username">@faculty.Username</option>
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <option value="">No faculties available</option>
-                                }
-                            </select>
-                            <span asp-validation-for="Faculty" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input asp-for="IsActive" class="form-check-input" />
-                                <label asp-for="IsActive" class="form-check-label">Active</label>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-                        </div>
-                    </form>
+
+                <div class="mb-3">
+                    <label asp-for="CourseName" class="form-label">Course Name</label>
+                    <input asp-for="CourseName" class="form-control" required />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="card-title mb-0">Student Management</h5>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="card-body">
-                    <h6 class="mb-3">Enrolled Students</h6>
-                    <ul class="list-group">
-                        @if (ViewBag.EnrolledStudents != null && ViewBag.EnrolledStudents.Count > 0)
+
+                <div class="mb-3">
+                    <label asp-for="Credits" class="form-label">Credits</label>
+                    <input asp-for="Credits" class="form-control" type="number" min="1" required />
+                    <span asp-validation-for="Credits" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Faculty" class="form-label">Faculty</label>
+                    <select asp-for="Faculty" class="form-select" required>
+                        <option value="">Select Faculty</option>
+                        @foreach (var faculty in ViewBag.FacultyList)
                         {
-                            @foreach (var student in ViewBag.EnrolledStudents)
-                            {
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    @student.Username
-                                    <form asp-action="RemoveStudent" method="post" class="d-inline">
-                                        <input type="hidden" name="courseId" value="@Model.Id" />
-                                        <input type="hidden" name="studentId" value="@student.Id" />
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-person-dash"></i> Remove
-                                        </button>
-                                    </form>
-                                </li>
-                            }
+                            <option value="@faculty.Username" selected="@(faculty.Username == Model.Faculty)">
+                                @faculty.FullName
+                            </option>
                         }
-                        else
-                        {
-                            <li class="list-group-item">No students enrolled</li>
-                        }
-                    </ul>
+                    </select>
+                    <span asp-validation-for="Faculty" class="text-danger"></span>
                 </div>
-                
-                <div class="card-footer">
-                    <h6>Add Student to Course</h6>
-                    <form asp-action="EnrollStudent" method="post">
-                        <input type="hidden" name="courseId" value="@Model.Id" />
-                        <div class="input-group">
-                            <select name="studentId" class="form-select" required>
-                                <option value="">Select Student</option>
-                                @if (ViewBag.AvailableStudents != null && ViewBag.AvailableStudents.Count > 0)
-                                {
-                                    @foreach (var student in ViewBag.AvailableStudents)
-                                    {
-                                        <option value="@student.Id">@student.Username</option>
-                                    }
-                                }
-                            </select>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-person-plus"></i> Add
-                            </button>
-                        </div>
-                    </form>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsActive" class="form-check-label">Active</label>
+                    </div>
                 </div>
-            </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-2"></i>Save Changes
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to List
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Styles {
+    <style>
+        .card {
+            border: none;
+            border-radius: 0.5rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.375rem;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+        }
+
+        .text-danger {
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+        }
+    </style>
 }

@@ -1,0 +1,105 @@
+@model IEnumerable<lolapdp.Models.Course>
+@{
+    ViewData["Title"] = "Khóa học giảng dạy";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Bạn chưa được phân công giảng dạy khóa học nào.
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã khóa học</th>
+                                <th>Tên khóa học</th>
+                                <th>Mô tả</th>
+                                <th>Số tín chỉ</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var course in Model)
+                            {
+                                <tr>
+                                    <td>@course.CourseId</td>
+                                    <td>@course.CourseName</td>
+                                    <td>@course.Description</td>
+                                    <td>@course.Credits</td>
+                                    <td>
+                                        <a asp-action="AssignGrade" asp-route-courseId="@course.CourseId" 
+                                           class="btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil"></i> Nhập điểm
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Grade Management Modal -->
+<div class="modal fade" id="gradeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Manage Grades</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="gradeForm" asp-action="UpdateGrade" method="post">
+                    <input type="hidden" id="courseId" name="courseId" />
+                    <div class="form-group">
+                        <label>Student Username</label>
+                        <input type="text" name="studentUsername" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <input type="number" name="grade" class="form-control" required min="0" max="100">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Grade</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showGradeModal(courseId) {
+            $('#courseId').val(courseId);
+            $('#gradeModal').modal('show');
+        }
+    </script>
+} 

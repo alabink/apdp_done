@@ -2,247 +2,215 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="dashboard-container">
-    <!-- Welcome Section -->
-    <div class="welcome-section">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1>Welcome back, @User.Identity?.Name!</h1>
-                <p class="text-muted">Here's what's happening with your courses today.</p>
-            </div>
-        </div>
-    </div>
-
+<div class="container mt-4">
     @if (User.IsInRole("Admin"))
     {
-        <!-- Admin Stats -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-primary-soft">
-                        <i class="bi bi-people"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>@ViewBag.TotalUsers</h3>
-                        <p>Total Users</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-success-soft">
-                        <i class="bi bi-mortarboard"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>@ViewBag.TotalStudents</h3>
-                        <p>Students</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-people-fill me-2"></i>Total Users</h5>
+                        <h2 class="mb-0">@ViewBag.TotalUsers</h2>
+                        <a asp-controller="Admin" asp-action="ManageUsers" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>Manage Users
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-info-soft">
-                        <i class="bi bi-person-workspace"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>@ViewBag.TotalFaculty</h3>
-                        <p>Faculty Members</p>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-book-fill me-2"></i>Courses</h5>
+                        <h2 class="mb-0">@ViewBag.TotalCourses</h2>
+                        <a asp-controller="Course" asp-action="Index" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>Manage Courses
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-warning-soft">
-                        <i class="bi bi-book"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>@ViewBag.ActiveCourses</h3>
-                        <p>Active Courses</p>
+            <div class="col-md-4">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-person-video3 me-2"></i>Faculty</h5>
+                        <h2 class="mb-0">@ViewBag.TotalFaculty</h2>
+                        <a asp-controller="Admin" asp-action="ManageFaculty" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>Manage Faculty
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Overview -->
-        <div class="row g-4">
-            <div class="col-md-6">
+        <div class="row mt-4">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Recent User Activities</h5>
-                        <a href="@Url.Action("ManageUsers", "Admin")" class="btn btn-sm btn-outline-primary">View All</a>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="bi bi-lightning-fill me-2"></i>Quick Actions</h5>
                     </div>
                     <div class="card-body">
-                        @if (ViewBag.RecentUserActivities != null && ViewBag.RecentUserActivities.Count > 0)
-                        {
-                            foreach (var user in ViewBag.RecentUserActivities)
-                            {
-                                <div class="activity-item">
-                                    <div class="activity-icon bg-success-soft">
-                                        <i class="bi bi-person"></i>
-                                    </div>
-                                    <div class="activity-details">
-                                        <h6>@user.Username</h6>
-                                        <p>Role: @user.Role</p>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <p class="text-muted text-center my-3">No recent user activities</p>
-                        }
+                        <div class="list-group">
+                            <a asp-controller="Course" asp-action="Create" class="list-group-item list-group-item-action">
+                                <i class="bi bi-plus-circle-fill me-2"></i>Add New Course
+                            </a>
+                            <a asp-controller="Admin" asp-action="AddUser" class="list-group-item list-group-item-action">
+                                <i class="bi bi-person-plus-fill me-2"></i>Add New User
+                            </a>
+                            <a asp-controller="Admin" asp-action="AssignFaculty" class="list-group-item list-group-item-action">
+                                <i class="bi bi-person-check-fill me-2"></i>Assign Faculty
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (User.IsInRole("Faculty"))
+    {
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-journal-bookmark-fill me-2"></i>Teaching Courses</h5>
+                        <h2 class="mb-0">@ViewBag.TeachingCourses</h2>
+                        <a asp-controller="Faculty" asp-action="Index" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>View List
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-mortarboard-fill me-2"></i>Students</h5>
+                        <h2 class="mb-0">@ViewBag.TotalStudents</h2>
+                        <span class="text-white-50"><i class="bi bi-info-circle me-1"></i>Total students in classes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">Recent Course Activities</h5>
-                        <a href="@Url.Action("Index", "Course")" class="btn btn-sm btn-outline-primary">View All</a>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="bi bi-clock-history me-2"></i>Recent Courses</h5>
                     </div>
                     <div class="card-body">
-                        @if (ViewBag.RecentCourseActivities != null && ViewBag.RecentCourseActivities.Count > 0)
+                        @if (ViewBag.RecentCourses != null && ViewBag.RecentCourses.Count > 0)
                         {
-                            foreach (var course in ViewBag.RecentCourseActivities)
-                            {
-                                <div class="activity-item">
-                                    <div class="activity-icon bg-primary-soft">
-                                        <i class="bi bi-book"></i>
-                                    </div>
-                                    <div class="activity-details">
-                                        <h6>@course.CourseName</h6>
-                                        <p>Code: @course.CourseCode</p>
-                                    </div>
-                                </div>
-                            }
+                            <div class="list-group">
+                                @foreach (var course in ViewBag.RecentCourses)
+                                {
+                                    <a asp-controller="Faculty" asp-action="AssignGrade" asp-route-courseId="@course.CourseId" 
+                                       class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1"><i class="bi bi-book me-2"></i>@course.CourseName</h6>
+                                            <small class="text-muted"><i class="bi bi-hash me-1"></i>@course.CourseId</small>
+                                        </div>
+                                        <p class="mb-1"><i class="bi bi-info-circle me-2"></i>@course.Description</p>
+                                    </a>
+                                }
+                            </div>
                         }
                         else
                         {
-                            <p class="text-muted text-center my-3">No recent course activities</p>
+                            <p class="text-muted mb-0"><i class="bi bi-exclamation-circle me-2"></i>No courses assigned yet.</p>
                         }
                     </div>
                 </div>
             </div>
         </div>
     }
-    else
+    else if (User.IsInRole("Student"))
     {
-        <!-- Regular User Stats -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-primary-soft">
-                        <i class="bi bi-book"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>12</h3>
-                        <p>Active Courses</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-success-soft">
-                        <i class="bi bi-people"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>48</h3>
-                        <p>Total Students</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-journal-check me-2"></i>Enrolled Courses</h5>
+                        <h2 class="mb-0">@ViewBag.EnrolledCourses</h2>
+                        <a asp-controller="Student" asp-action="Index" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>View List
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-info-soft">
-                        <i class="bi bi-calendar-check"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>8</h3>
-                        <p>Classes Today</p>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-star-fill me-2"></i>Average Grade</h5>
+                        <h2 class="mb-0">@ViewBag.AverageGrade</h2>
+                        <a asp-controller="Student" asp-action="Grades" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>View Grades
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-warning-soft">
-                        <i class="bi bi-clock-history"></i>
-                    </div>
-                    <div class="stat-details">
-                        <h3>24</h3>
-                        <p>Pending Tasks</p>
+            <div class="col-md-4">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-journal-plus me-2"></i>Available Courses</h5>
+                        <h2 class="mb-0">@ViewBag.AvailableCourses</h2>
+                        <a asp-controller="Student" asp-action="Register" class="text-white stretched-link">
+                            <i class="bi bi-arrow-right-circle me-1"></i>Register Course
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Regular User Content -->
-        <div class="row g-4">
+        <div class="row mt-4">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Recent Activity</h5>
+                        <h5 class="card-title mb-0"><i class="bi bi-clock-history me-2"></i>Recent Courses</h5>
                     </div>
                     <div class="card-body">
-                        <div class="activity-item">
-                            <div class="activity-icon bg-success-soft">
-                                <i class="bi bi-person-check"></i>
+                        @if (ViewBag.RecentCourses != null && ViewBag.RecentCourses.Count > 0)
+                        {
+                            <div class="list-group">
+                                @foreach (var course in ViewBag.RecentCourses)
+                                {
+                                    <div class="list-group-item">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1"><i class="bi bi-book me-2"></i>@course.CourseName</h6>
+                                            <small class="text-muted"><i class="bi bi-hash me-1"></i>@course.CourseId</small>
+                                        </div>
+                                        <p class="mb-1"><i class="bi bi-info-circle me-2"></i>@course.Description</p>
+                                        <small class="text-muted"><i class="bi bi-person-video3 me-1"></i>Faculty: @course.Faculty</small>
+                                    </div>
+                                }
                             </div>
-                            <div class="activity-details">
-                                <h6>New Student Enrolled</h6>
-                                <p>John Doe enrolled in "Advanced Mathematics"</p>
-                                <small class="text-muted">2 hours ago</small>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon bg-primary-soft">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                            <div class="activity-details">
-                                <h6>Assignment Submitted</h6>
-                                <p>5 students submitted "Week 3 Assignment"</p>
-                                <small class="text-muted">5 hours ago</small>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon bg-info-soft">
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="activity-details">
-                                <h6>Course Completed</h6>
-                                <p>Sarah Wilson completed "Basic Physics"</p>
-                                <small class="text-muted">1 day ago</small>
-                            </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted mb-0"><i class="bi bi-exclamation-circle me-2"></i>You haven't enrolled in any courses yet.</p>
+                        }
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Upcoming Classes</h5>
+                        <h5 class="card-title mb-0"><i class="bi bi-bell-fill me-2"></i>Notifications</h5>
                     </div>
                     <div class="card-body">
-                        <div class="upcoming-class">
-                            <div class="class-time">09:00 AM</div>
-                            <div class="class-details">
-                                <h6>Advanced Mathematics</h6>
-                                <p>Room 201 • 25 Students</p>
+                        @if (ViewBag.Notifications != null && ViewBag.Notifications.Count > 0)
+                        {
+                            <div class="list-group">
+                                @foreach (var notification in ViewBag.Notifications)
+                                {
+                                    <div class="list-group-item">
+                                        <small class="text-muted"><i class="bi bi-calendar-event me-1"></i>@notification.Date.ToString("dd/MM/yyyy")</small>
+                                        <p class="mb-1"><i class="bi bi-chat-left-text me-2"></i>@notification.Message</p>
+                                    </div>
+                                }
                             </div>
-                        </div>
-                        <div class="upcoming-class">
-                            <div class="class-time">11:30 AM</div>
-                            <div class="class-details">
-                                <h6>Physics Lab</h6>
-                                <p>Lab 3 • 18 Students</p>
-                            </div>
-                        </div>
-                        <div class="upcoming-class">
-                            <div class="class-time">02:00 PM</div>
-                            <div class="class-details">
-                                <h6>English Literature</h6>
-                                <p>Room 105 • 30 Students</p>
-                            </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted mb-0"><i class="bi bi-bell-slash me-2"></i>No new notifications.</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -250,176 +218,22 @@
     }
 </div>
 
-<style>
-.dashboard-container {
-    padding: 2rem;
-}
-
-.welcome-section {
-    margin-bottom: 2rem;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.admin-actions {
-    margin-top: 1rem;
-}
-
-.stat-card {
-    background: white;
-    border-radius: 10px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    transition: transform 0.2s ease;
-}
-
-.stat-card:hover .stat-icon {
-    transform: scale(1.1);
-}
-
-.bg-primary-soft { background: rgba(13, 110, 253, 0.1); color: #0d6efd; }
-.bg-success-soft { background: rgba(25, 135, 84, 0.1); color: #198754; }
-.bg-info-soft { background: rgba(13, 202, 240, 0.1); color: #0dcaf0; }
-.bg-warning-soft { background: rgba(255, 193, 7, 0.1); color: #ffc107; }
-
-.stat-details h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.stat-details p {
-    margin: 0;
-    color: #6c757d;
-}
-
-.activity-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
-    transition: background-color 0.2s ease;
-}
-
-.activity-item:hover {
-    background-color: rgba(0,0,0,0.01);
-}
-
-.activity-item:last-child {
-    border-bottom: none;
-}
-
-.activity-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.activity-details h6 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.activity-details p {
-    margin: 0.25rem 0;
-    color: #6c757d;
-}
-
-.upcoming-class {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
-    transition: background-color 0.2s ease;
-}
-
-.upcoming-class:hover {
-    background-color: rgba(0,0,0,0.01);
-}
-
-.upcoming-class:last-child {
-    border-bottom: none;
-}
-
-.class-time {
-    font-weight: 600;
-    color: #0d6efd;
-    min-width: 80px;
-}
-
-.class-details h6 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.class-details p {
-    margin: 0;
-    color: #6c757d;
-    font-size: 0.875rem;
-}
-
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.card-header {
-    background: white;
-    border-bottom: 1px solid #e9ecef;
-    padding: 1rem 1.5rem;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.btn i {
-    font-size: 1.1em;
-}
-</style> 
+@section Styles {
+    <style>
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stretched-link::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            content: "";
+        }
+    </style>
+} 

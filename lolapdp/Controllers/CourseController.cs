@@ -1,257 +1,215 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using lolapdp.Models;
-using lolapdp.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace lolapdp.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class CourseController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CSVService _csvService;
 
-        public CourseController(ApplicationDbContext context)
+        public CourseController(CSVService csvService)
         {
-            _context = context;
+            _csvService = csvService ?? throw new ArgumentNullException(nameof(csvService));
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var courses = await _context.Courses.ToListAsync();
-            ViewBag.FacultyList = await _context.Users
-                .Where(u => u.Role == "Faculty")
-                .ToListAsync();
+            var courses = _csvService.GetAllCourses();
             return View(courses);
         }
 
-        public async Task<IActionResult> Create()
+        [HttpGet]
+        public IActionResult Create()
         {
-            ViewBag.FacultyList = await _context.Users
-                .Where(u => u.Role == "Faculty")
-                .ToListAsync();
+            var facultyList = _csvService.GetAllUsers()
+                .Where(u => u.Role.Equals("Faculty", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            ViewBag.FacultyList = facultyList;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Course course)
+        public IActionResult Create(Course course)
         {
+            if (course == null)
+            {
+                return BadRequest();
+            }
+
             if (ModelState.IsValid)
             {
-                if (await _context.Courses.AnyAsync(c => c.CourseCode == course.CourseCode))
+                try
                 {
-                    ModelState.AddModelError("CourseCode", "Course code already exists");
-                    ViewBag.FacultyList = await _context.Users
-                        .Where(u => u.Role == "Faculty")
-                        .ToListAsync();
-                    return View(course);
+                    course.IsActive = true;
+                    _csvService.AddCourse(course);
+                    TempData["Message"] = "Khóa học đã được tạo thành công";
+                    return RedirectToAction(nameof(Index));
                 }
-
-                _context.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
             }
-            ViewBag.FacultyList = await _context.Users
-                .Where(u => u.Role == "Faculty")
-                .ToListAsync();
+
+            var facultyList = _csvService.GetAllUsers()
+                .Where(u => u.Role.Equals("Faculty", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            ViewBag.FacultyList = facultyList;
             return View(course);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public IActionResult Edit(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var course = _csvService.GetAllCourses()
+                .FirstOrDefault(c => c.CourseId == id);
+
             if (course == null)
             {
                 return NotFound();
             }
-            ViewBag.FacultyList = await _context.Users
-                .Where(u => u.Role == "Faculty")
-                .ToListAsync();
 
-            // Use a direct approach instead of SQL queries
-            var rawSql = "SELECT DISTINCT StudentId FROM StudentCourses WHERE CourseId = {0}";
-            var enrolledStudentIds = new List<int>();
+            var facultyList = _csvService.GetAllUsers()
+                .Where(u => u.Role.Equals("Faculty", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            ViewBag.FacultyList = facultyList;
 
-            try
-            {
-                // Try to manually execute the SQL and get the results
-                using (var command = _context.Database.GetDbConnection().CreateCommand())
-                {
-                    command.CommandText = string.Format(rawSql, id.Value);
+            // Get enrolled students
+            var enrolledStudents = _csvService.GetEnrolledStudents(id);
+            ViewBag.EnrolledStudents = enrolledStudents;
 
-                    if (command.Connection.State != System.Data.ConnectionState.Open)
-                        await command.Connection.OpenAsync();
+            // Get student grades
+            var grades = _csvService.GetStudentGrades(id);
+            ViewBag.StudentGrades = grades.ToDictionary(g => g.Username);
 
-                    using (var reader = await command.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            enrolledStudentIds.Add(reader.GetInt32(0));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the exception if needed
-            }
-
-            ViewBag.EnrolledStudents = await _context.Users
-                .Where(u => u.Role == "Student" && enrolledStudentIds.Contains(u.Id))
-                .ToListAsync();
-
-            // Load available students (not enrolled in this course)
-            ViewBag.AvailableStudents = await _context.Users
-                .Where(u => u.Role == "Student" && !enrolledStudentIds.Contains(u.Id))
-                .ToListAsync();
+            // Get available students (not enrolled)
+            var allStudents = _csvService.GetAllUsers()
+                .Where(u => u.Role.Equals("Student", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            ViewBag.AvailableStudents = allStudents
+                .Where(s => !enrolledStudents.Any(es => es.Username == s.Username))
+                .ToList();
 
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Course course)
+        public IActionResult Edit(string id, Course course)
         {
-            if (id != course.Id)
+            if (string.IsNullOrEmpty(id) || course == null || id != course.CourseId)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
-                var existingCourse = await _context.Courses
-                    .Where(c => c.CourseCode == course.CourseCode && c.Id != course.Id)
-                    .FirstOrDefaultAsync();
-
-                if (existingCourse != null)
-                {
-                    ModelState.AddModelError("CourseCode", "Course code already exists");
-                    ViewBag.FacultyList = await _context.Users
-                        .Where(u => u.Role == "Faculty")
-                        .ToListAsync();
-                    return View(course);
-                }
-
                 try
                 {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
+                    _csvService.UpdateCourse(course);
+                    TempData["Message"] = "Khóa học đã được cập nhật thành công";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!CourseExists(course.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("", ex.Message);
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewBag.FacultyList = await _context.Users
-                .Where(u => u.Role == "Faculty")
-                .ToListAsync();
+
+            var facultyList = _csvService.GetAllUsers()
+                .Where(u => u.Role.Equals("Faculty", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            ViewBag.FacultyList = facultyList;
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult UpdateGrade(string courseId, string username, decimal score)
         {
-            var course = await _context.Courses.FindAsync(id);
-            if (course != null)
+            if (string.IsNullOrEmpty(courseId) || string.IsNullOrEmpty(username))
             {
-                _context.Courses.Remove(course);
-                await _context.SaveChangesAsync();
+                return BadRequest();
             }
+
+            try
+            {
+                var grade = new Grade
+                {
+                    CourseId = courseId,
+                    Username = username,
+                    Score = score,
+                    GradeDate = DateTime.Now
+                };
+
+                _csvService.AddGrade(grade);
+                TempData["Message"] = "Điểm số đã được cập nhật thành công";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction(nameof(Edit), new { id = courseId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var course = _csvService.GetAllCourses()
+                    .FirstOrDefault(c => c.CourseId == id);
+
+                if (course != null)
+                {
+                    course.IsActive = false;
+                    _csvService.UpdateCourse(course);
+                    TempData["Message"] = "Khóa học đã được xóa thành công";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnrollStudent(int courseId, int studentId)
+        public IActionResult EnrollStudent(string courseId, string username)
         {
-            // Check if course and student exist
-            var course = await _context.Courses.FindAsync(courseId);
-            var student = await _context.Users.FirstOrDefaultAsync(u => u.Id == studentId && u.Role == "Student");
-
-            if (course == null || student == null)
+            if (string.IsNullOrEmpty(courseId) || string.IsNullOrEmpty(username))
             {
-                return NotFound();
+                return BadRequest();
             }
 
             try
             {
-                // Check if student is already enrolled
-                bool isEnrolled = false;
-                using (var command = _context.Database.GetDbConnection().CreateCommand())
-                {
-                    command.CommandText = "SELECT COUNT(1) FROM StudentCourses WHERE CourseId = @courseId AND StudentId = @studentId";
-
-                    var courseIdParam = command.CreateParameter();
-                    courseIdParam.ParameterName = "@courseId";
-                    courseIdParam.Value = courseId;
-                    command.Parameters.Add(courseIdParam);
-
-                    var studentIdParam = command.CreateParameter();
-                    studentIdParam.ParameterName = "@studentId";
-                    studentIdParam.Value = studentId;
-                    command.Parameters.Add(studentIdParam);
-
-                    if (command.Connection.State != System.Data.ConnectionState.Open)
-                        await command.Connection.OpenAsync();
-
-                    var count = Convert.ToInt32(await command.ExecuteScalarAsync());
-                    isEnrolled = count > 0;
-                }
-
-                if (isEnrolled)
-                {
-                    // Student already enrolled
-                    return RedirectToAction(nameof(Edit), new { id = courseId });
-                }
-
-                // Insert using ADO.NET
-                using (var command = _context.Database.GetDbConnection().CreateCommand())
-                {
-                    command.CommandText = "INSERT INTO StudentCourses (StudentId, CourseId, EnrollmentDate) VALUES (@studentId, @courseId, @date)";
-
-                    var courseIdParam = command.CreateParameter();
-                    courseIdParam.ParameterName = "@courseId";
-                    courseIdParam.Value = courseId;
-                    command.Parameters.Add(courseIdParam);
-
-                    var studentIdParam = command.CreateParameter();
-                    studentIdParam.ParameterName = "@studentId";
-                    studentIdParam.Value = studentId;
-                    command.Parameters.Add(studentIdParam);
-
-                    var dateParam = command.CreateParameter();
-                    dateParam.ParameterName = "@date";
-                    dateParam.Value = DateTime.Now;
-                    command.Parameters.Add(dateParam);
-
-                    if (command.Connection.State != System.Data.ConnectionState.Open)
-                        await command.Connection.OpenAsync();
-
-                    await command.ExecuteNonQueryAsync();
-                }
+                _csvService.AddStudentToCourse(username, courseId);
+                TempData["Message"] = "Sinh viên đã được đăng ký thành công vào khóa học";
             }
             catch (Exception ex)
             {
-                // Log the exception and return to the edit page
-                return RedirectToAction(nameof(Edit), new { id = courseId });
+                TempData["Error"] = ex.Message;
             }
 
             return RedirectToAction(nameof(Edit), new { id = courseId });
@@ -259,42 +217,24 @@ namespace lolapdp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveStudent(int courseId, int studentId)
+        public IActionResult RemoveStudent(string courseId, string username)
         {
+            if (string.IsNullOrEmpty(courseId) || string.IsNullOrEmpty(username))
+            {
+                return BadRequest();
+            }
+
             try
             {
-                // Delete using ADO.NET
-                using (var command = _context.Database.GetDbConnection().CreateCommand())
-                {
-                    command.CommandText = "DELETE FROM StudentCourses WHERE CourseId = @courseId AND StudentId = @studentId";
-
-                    var courseIdParam = command.CreateParameter();
-                    courseIdParam.ParameterName = "@courseId";
-                    courseIdParam.Value = courseId;
-                    command.Parameters.Add(courseIdParam);
-
-                    var studentIdParam = command.CreateParameter();
-                    studentIdParam.ParameterName = "@studentId";
-                    studentIdParam.Value = studentId;
-                    command.Parameters.Add(studentIdParam);
-
-                    if (command.Connection.State != System.Data.ConnectionState.Open)
-                        await command.Connection.OpenAsync();
-
-                    await command.ExecuteNonQueryAsync();
-                }
+                _csvService.RemoveStudentFromCourse(username, courseId);
+                TempData["Message"] = "Sinh viên đã được xóa khỏi khóa học";
             }
             catch (Exception ex)
             {
-                // Log the exception if needed
+                TempData["Error"] = ex.Message;
             }
 
             return RedirectToAction(nameof(Edit), new { id = courseId });
-        }
-
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.Id == id);
         }
     }
 }

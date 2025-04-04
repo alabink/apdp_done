@@ -1,7 +1,8 @@
-using lolapdp.Models;
-using lolapdp.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
+using lolapdp.Models;
 
 namespace lolapdp
 {
@@ -14,25 +15,29 @@ namespace lolapdp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // Add DbContext
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            // Add Authentication
+            // Add authentication
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Account/Logout";
                     options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.Cookie.Name = "CourseManagement";
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromHours(24);
+                    options.SlidingExpiration = true;
                 });
 
-            // Add Authorization policies
-            builder.Services.AddAuthorization(options =>
+            // Add session
+            builder.Services.AddSession(options =>
             {
-                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("Faculty", policy => policy.RequireRole("Faculty"));
-                options.AddPolicy("Student", policy => policy.RequireRole("Student"));
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
+
+            // Register CSV service as Singleton to maintain data consistency
+            builder.Services.AddSingleton<CSVService>();
 
             var app = builder.Build();
 
@@ -47,12 +52,18 @@ namespace lolapdp
             app.UseStaticFiles();
             app.UseRouting();
 
+            // Add authentication & authorization
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            // Ensure data directory exists
+            var csvService = app.Services.GetRequiredService<CSVService>();
 
             app.Run();
         }

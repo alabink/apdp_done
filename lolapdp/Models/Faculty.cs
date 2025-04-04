@@ -2,11 +2,16 @@
 
 namespace lolapdp.Models
 {
-    public class Faculty : Controller
+    public class Faculty
     {
-        public IActionResult Index()
+        public string Username { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public List<Course> AssignedCourses { get; set; }
+
+        public Faculty()
         {
-            return View();
+            AssignedCourses = new List<Course>();
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿Username,Password,Role,FullName,Email
+admin,admin123,Admin,Administrator,admin@example.com
+dbl,dbl,Admin,Dương Bảo Long,long.duongbao13@gmail.com
+pnlinh,faculty123,Faculty,Phan Nhat Linh,pnlinh@example.com
+valverde,faculty123,Faculty,Federico Valverde,valverde@example.com
+student1,student123,Student,Li ô neo Pép si,student1@example.com
+student2,student123,Student,Cristiano Ronaldo,student2@example.com
+student3,student123,Student,Kylian Mbappe,student3@example.com
+student4,student123,Student,Erling Haaland,student4@example.com
+student5,student123,Student,Kevin De Bruyne,student5@example.com
+tgbao,student123,Student,Tran Gia Bao,bbb@gmail.com
+test1,student123,Student,Nguyen Van Test 1,tessst@gmail.com
+test2,student123,Student,Nguyen Van Test 2,test2@example.com
+test3,student123,Student,Nguyen Van Test 3,test3@example.com
+test4,student123,Student,Nguyen Van Test 4,test4@example.com
+km99,student123,Student,Kilyan Mbappe Loutin,km99@gmail.com

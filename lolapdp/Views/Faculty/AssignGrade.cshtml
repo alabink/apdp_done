@@ -1,0 +1,222 @@
+@model IEnumerable<lolapdp.Models.User>
+@{
+    ViewData["Title"] = "Nhập điểm";
+    var course = ViewBag.Course as lolapdp.Models.Course;
+    var grades = ViewBag.StudentGrades as Dictionary<string, lolapdp.Models.Grade>;
+}
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@course.CourseName (@course.CourseId)</h4>
+                <span class="badge bg-primary">Giảng viên: @course.Faculty</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Mã sinh viên</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Điểm hiện tại</th>
+                            <th>Cập nhật điểm</th>
+                            <th>Ngày cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var currentGrade = grades != null && grades.ContainsKey(item.Username) ? grades[item.Username] : null;
+                            <tr id="row-@item.Username">
+                                <td>@item.Username</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td id="score-@item.Username">
+                                    @if (currentGrade != null)
+                                    {
+                                        <span class="badge rounded-pill @(currentGrade.Score >= 90 ? "bg-success" :
+                                                                        currentGrade.Score >= 70 ? "bg-primary" :
+                                                                        currentGrade.Score >= 50 ? "bg-warning" : "bg-danger")">
+                                            @currentGrade.Score.ToString("F1")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Chưa có điểm</span>
+                                    }
+                                </td>
+                                <td>
+                                    <form onsubmit="return submitGrade(event, '@course.CourseId', '@item.Username')" class="form-inline">
+                                        @Html.AntiForgeryToken()
+                                        <div class="input-group">
+                                            <input type="number" name="score" class="form-control" 
+                                                   placeholder="Điểm" min="0" max="100" step="0.1" required 
+                                                   value="@(currentGrade?.Score ?? 0)" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-save"></i> Lưu
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td id="date-@item.Username">
+                                    @if (currentGrade != null)
+                                    {
+                                        <span class="text-muted">
+                                            <i class="bi bi-calendar-event me-1"></i>@currentGrade.GradeDate.ToString("dd/MM/yyyy HH:mm")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="GradeStatistics" asp-route-courseId="@course.CourseId" class="btn btn-info me-2">
+            <i class="bi bi-bar-chart-fill"></i> Xem thống kê điểm
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Quay lại
+        </a>
+    </div>
+</div>
+
+<div id="alert-container"></div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle me-2"></i>
+                Cập nhật điểm thành công
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-x-circle me-2"></i>
+                Có lỗi xảy ra khi cập nhật điểm
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+
+            // Tự động ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        function submitGrade(event, courseId, username) {
+            event.preventDefault();
+            const form = event.target;
+            const score = form.querySelector('input[name="score"]').value;
+            const submitButton = form.querySelector('button[type="submit"]');
+            
+            // Disable button while processing
+            submitButton.disabled = true;
+            
+            fetch('/Faculty/AssignGrade', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    courseId: courseId,
+                    username: username,
+                    score: parseFloat(score)
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Update score display
+                    const scoreCell = document.getElementById(`score-${username}`);
+                    const dateCell = document.getElementById(`date-${username}`);
+                    
+                    if (scoreCell) {
+                        const score = parseFloat(data.score);
+                        const badgeClass = score >= 90 ? 'bg-success' :
+                                         score >= 70 ? 'bg-primary' :
+                                         score >= 50 ? 'bg-warning' : 'bg-danger';
+                        scoreCell.innerHTML = `<span class="badge rounded-pill ${badgeClass}">${data.score}</span>`;
+                    }
+                    
+                    if (dateCell) {
+                        dateCell.innerHTML = `<span class="text-muted"><i class="bi bi-calendar-event me-1"></i>${data.gradeDate}</span>`;
+                    }
+                    
+                    // Show success toast
+                    const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                    successToast.show();
+                } else {
+                    // Show error toast
+                    const errorToast = document.getElementById('errorToast');
+                    errorToast.querySelector('.toast-body').innerHTML = `<i class="bi bi-x-circle me-2"></i>${data.message}`;
+                    const toast = new bootstrap.Toast(errorToast);
+                    toast.show();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorToast = document.getElementById('errorToast');
+                errorToast.querySelector('.toast-body').innerHTML = `<i class="bi bi-x-circle me-2"></i>Có lỗi xảy ra khi cập nhật điểm`;
+                const toast = new bootstrap.Toast(errorToast);
+                toast.show();
+            })
+            .finally(() => {
+                // Re-enable button
+                submitButton.disabled = false;
+            });
+            
+            return false;
+        }
+    </script>
+} 

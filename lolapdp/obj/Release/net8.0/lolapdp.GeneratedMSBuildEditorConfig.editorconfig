@@ -9,113 +9,141 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = lolapdp
 build_property.RootNamespace = lolapdp
-build_property.ProjectDir = C:\Users\Admin\Downloads\lolapdp-dbl\lolapdp-dbl\lolapdp\
+build_property.ProjectDir = C:\Users\Admin\Downloads\apdp\lolapdp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Admin\Downloads\lolapdp-dbl\lolapdp-dbl\lolapdp
+build_property.MSBuildProjectDirectory = C:\Users\Admin\Downloads\apdp\lolapdp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Account/Login.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Account/Register.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Admin/Delete.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Admin/Edit.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Admin/Index.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Admin/ManageCourses.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/ManageCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlQ291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Admin/ManageUsers.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/ManageFaculty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlRmFjdWx0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/ManageUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Course/Add.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Admin/ViewGrades.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0dyYWRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Course/Add.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEFkZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Course/Create.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Course/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Course/Delete.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Course/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Course/Edit.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Course/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Course/Index.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Course/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Faculty/ManageGrades.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Faculty/AssignGrade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxBc3NpZ25HcmFkZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Faculty/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Faculty/ManageGrades.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxNYW5hZ2VHcmFkZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Faculty/ViewAssignedCourses.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Faculty/ViewAssignedCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdWx0eVxWaWV3QXNzaWduZWRDb3Vyc2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Home/Dashboard.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Home/Index.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Home/Privacy.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Shared/Error.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Student/Index.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Student/Grades.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxHcmFkZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Student/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Student/ViewCourses.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Student/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Student/ViewCourses.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxWaWV3Q291cnNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Student/ViewGrades.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Student/ViewGrades.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxWaWV3R3JhZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/_ViewImports.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/_ViewStart.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Admin/Downloads/lolapdp-dbl/lolapdp-dbl/lolapdp/Views/Shared/_Layout.cshtml]
+[C:/Users/Admin/Downloads/apdp/lolapdp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-1wh0dovqrp

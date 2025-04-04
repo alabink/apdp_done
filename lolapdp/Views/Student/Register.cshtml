@@ -1,0 +1,42 @@
+@model IEnumerable<lolapdp.Models.Course>
+@{
+    ViewData["Title"] = "Đăng ký khóa học";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã khóa học</th>
+            <th>Tên khóa học</th>
+            <th>Mô tả</th>
+            <th>Số tín chỉ</th>
+            <th>Giảng viên</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CourseId</td>
+                <td>@item.CourseName</td>
+                <td>@item.Description</td>
+                <td>@item.Credits</td>
+                <td>@item.Faculty</td>
+                <td>
+                    <form asp-action="Register" method="post" style="display: inline;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="courseId" value="@item.CourseId" />
+                        <button type="submit" class="btn btn-sm btn-primary">Đăng ký</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div> 

@@ -1,5 +1,6 @@
 @{
-    ViewData["Title"] = "Đăng nhập";
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
 }
 
 <link rel="stylesheet" href="~/css/account.css" />
@@ -11,10 +12,11 @@
             <div class="col-md-6 col-lg-4">
                 <div class="auth-card">
                     <div class="card-body">
-                        <h2 class="auth-title text-center">Welcome Back!</h2>
+                        <h2 class="auth-title text-center">Welcome Back</h2>
                         <p class="auth-subtitle text-center">Please sign in to continue</p>
                         
                         <form asp-action="Login" method="post">
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label class="form-label">Username</label>
                                 <div class="input-group">
@@ -39,25 +41,57 @@
 
                             <div class="d-grid gap-2 mt-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
                                 </button>
                             </div>
-
-                            @if (ViewData["Error"] != null)
-                            {
-                                <div class="alert alert-danger mt-3" role="alert">
-                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                    @ViewData["Error"]
-                                </div>
-                            }
                         </form>
 
                         <div class="auth-links">
                             <p class="mb-0">
                                 Don't have an account? 
-                                <a asp-action="Register">Create one</a>
+                                <a asp-action="Register">Register now</a>
                             </p>
                         </div>
+
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @TempData["Error"]
+                            </div>
+                        }
+
+                        @if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-success mt-3" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                @TempData["Message"]
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        
+
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @TempData["Error"]
+                            </div>
+                        }
+
+                        @if (TempData["Message"] != null)
+                        {
+                            <div class="alert alert-success mt-3" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                @TempData["Message"]
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

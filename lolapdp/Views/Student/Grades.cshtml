@@ -1,0 +1,116 @@
+@model IEnumerable<lolapdp.Models.Grade>
+@{
+    ViewData["Title"] = "Bảng điểm";
+    var courses = ViewBag.Courses as Dictionary<string, lolapdp.Models.Course>;
+}
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@ViewData["Title"]</h4>
+                <div class="form-group mb-0">
+                    <select id="courseFilter" class="form-select">
+                        <option value="">Tất cả khóa học</option>
+                        @foreach (var course in courses.Values)
+                        {
+                            <option value="@course.CourseId">@course.CourseId - @course.CourseName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>Bạn chưa có điểm nào được cập nhật.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Mã khóa học</th>
+                                <th>Tên khóa học</th>
+                                <th>Giảng viên</th>
+                                <th class="text-center">Điểm số</th>
+                                <th class="text-end">Ngày cập nhật</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var grade in Model.OrderByDescending(g => g.GradeDate))
+                            {
+                                var course = courses.ContainsKey(grade.CourseId) ? courses[grade.CourseId] : null;
+                                <tr class="grade-row" data-course="@grade.CourseId">
+                                    <td>@grade.CourseId</td>
+                                    <td>@(course?.CourseName ?? "N/A")</td>
+                                    <td>@(course?.Faculty ?? "N/A")</td>
+                                    <td class="text-center">
+                                        <span class="badge rounded-pill @(grade.Score >= 90 ? "bg-success" :
+                                                                        grade.Score >= 70 ? "bg-primary" :
+                                                                        grade.Score >= 50 ? "bg-warning" : "bg-danger")">
+                                            @grade.Score.ToString("F1")
+                                        </span>
+                                    </td>
+                                    <td class="text-end text-muted">
+                                        <i class="bi bi-calendar-event me-1"></i>@grade.GradeDate.ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="3"><strong>Điểm trung bình:</strong></td>
+                                <td colspan="2" class="text-center">
+                                    <span class="badge rounded-pill bg-info">
+                                        @Model.Average(g => g.Score).ToString("F2")
+                                    </span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('courseFilter').addEventListener('change', function() {
+            const selectedCourse = this.value;
+            const rows = document.querySelectorAll('.grade-row');
+            
+            rows.forEach(row => {
+                if (!selectedCourse || row.dataset.course === selectedCourse) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <i class="bi bi-check-circle me-2"></i>@TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <i class="bi bi-exclamation-circle me-2"></i>@TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div> 

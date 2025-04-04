@@ -2,9 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\lolapdp",
+    "\\lolapdp\\Controllers",
+    "\\lolapdp\\Models",
     "\\lolapdp\\wwwroot",
     "\\lolapdp\\wwwroot\\css"
   ],
-  "SelectedNode": "\\lolapdp\\wwwroot\\css\\account.css",
+  "SelectedNode": "\\lolapdp\\Models\\Authentication.cs",
   "PreviewInSolutionExplorer": false
 }

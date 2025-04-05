@@ -7,21 +7,21 @@ using System.Linq;
 
 namespace lolapdp.Controllers
 {
-    [Authorize(Roles = "Faculty")]
+    [Authorize(Roles = "Faculty")] // Chỉ cho phép người dùng có vai trò Faculty truy cập
     public class FacultyController : Controller
     {
-        private readonly CSVService _csvService;
+        private readonly CSVService _csvService; // Dịch vụ CSV để thao tác với dữ liệu
 
         public FacultyController(CSVService csvService)
         {
-            _csvService = csvService ?? throw new ArgumentNullException(nameof(csvService));
+            _csvService = csvService ?? throw new ArgumentNullException(nameof(csvService)); // Khởi tạo dịch vụ CSV
         }
 
         public IActionResult Index()
         {
-            var username = User.Identity.Name;
-            var courses = _csvService.GetFacultyCourses(username);
-            return View(courses);
+            var username = User.Identity.Name; // Lấy username của giảng viên đang đăng nhập
+            var courses = _csvService.GetFacultyCourses(username); // Lấy danh sách khóa học của giảng viên
+            return View(courses); // Trả về view với danh sách khóa học
         }
 
         [HttpGet]
@@ -29,34 +29,34 @@ namespace lolapdp.Controllers
         {
             if (string.IsNullOrEmpty(courseId))
             {
-                return BadRequest();
+                return BadRequest(); // Trả về lỗi nếu không có mã khóa học
             }
 
             var course = _csvService.GetAllCourses()
                 .FirstOrDefault(c => c.CourseId == courseId && 
-                    c.Faculty.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+                    c.Faculty.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase)); // Tìm khóa học của giảng viên
 
             if (course == null)
             {
-                return NotFound();
+                return NotFound(); // Trả về lỗi nếu không tìm thấy khóa học
             }
 
-            ViewBag.Course = course;
-            var students = _csvService.GetEnrolledStudents(courseId);
+            ViewBag.Course = course; // Lưu thông tin khóa học vào ViewBag
+            var students = _csvService.GetEnrolledStudents(courseId); // Lấy danh sách sinh viên đã ghi danh
             
             // Lấy điểm của tất cả sinh viên trong khóa học
             var grades = new Dictionary<string, Grade>();
             foreach (var student in students)
             {
-                var studentGrades = _csvService.GetStudentGrades(student.Username, courseId);
+                var studentGrades = _csvService.GetStudentGrades(student.Username, courseId); // Lấy điểm của sinh viên
                 if (studentGrades.Any())
                 {
-                    grades[student.Username] = studentGrades.First();
+                    grades[student.Username] = studentGrades.First(); // Lưu điểm vào dictionary
                 }
             }
-            ViewBag.StudentGrades = grades;
+            ViewBag.StudentGrades = grades; // Lưu điểm của sinh viên vào ViewBag
 
-            return View(students);
+            return View(students); // Trả về view với danh sách sinh viên
         }
 
         [HttpPost]
@@ -65,86 +65,86 @@ namespace lolapdp.Controllers
         {
             if (model == null || string.IsNullOrEmpty(model.CourseId) || string.IsNullOrEmpty(model.Username))
             {
-                return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ" }); // Trả về lỗi nếu dữ liệu không hợp lệ
             }
 
             try
             {
                 var course = _csvService.GetAllCourses()
                     .FirstOrDefault(c => c.CourseId == model.CourseId && 
-                        c.Faculty.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+                        c.Faculty.Equals(User.Identity.Name, StringComparison.OrdinalIgnoreCase)); // Tìm khóa học của giảng viên
 
                 if (course == null)
                 {
-                    return Json(new { success = false, message = "Không tìm thấy khóa học" });
+                    return Json(new { success = false, message = "Không tìm thấy khóa học" }); // Trả về lỗi nếu không tìm thấy khóa học
                 }
 
                 var grade = new Grade
                 {
-                    Username = model.Username,
-                    CourseId = model.CourseId,
-                    Score = model.Score,
-                    GradeDate = DateTime.Now
+                    Username = model.Username, // Username của sinh viên
+                    CourseId = model.CourseId, // Mã khóa học
+                    Score = model.Score, // Điểm số
+                    GradeDate = DateTime.Now // Ngày chấm điểm
                 };
 
-                _csvService.AddGrade(grade);
+                _csvService.AddGrade(grade); // Thêm điểm mới
 
                 return Json(new
                 {
                     success = true,
-                    score = grade.Score.ToString("F1"),
-                    gradeDate = grade.GradeDate.ToString("dd/MM/yyyy HH:mm"),
-                    message = "Điểm đã được cập nhật thành công"
+                    score = grade.Score.ToString("F1"), // Định dạng điểm với 1 số thập phân
+                    gradeDate = grade.GradeDate.ToString("dd/MM/yyyy HH:mm"), // Định dạng ngày giờ
+                    message = "Điểm đã được cập nhật thành công" // Thông báo thành công
                 });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message });
+                return Json(new { success = false, message = ex.Message }); // Trả về lỗi nếu có ngoại lệ
             }
         }
 
-        public class GradeUpdateModel
+        public class GradeUpdateModel // Model để cập nhật điểm
         {
-            public string CourseId { get; set; }
-            public string Username { get; set; }
-            public decimal Score { get; set; }
+            public string CourseId { get; set; } // Mã khóa học
+            public string Username { get; set; } // Username của sinh viên
+            public decimal Score { get; set; } // Điểm số
         }
 
-        public class GradeDistribution
+        public class GradeDistribution // Phân phối điểm
         {
-            public int Excellent { get; set; } // >= 90
-            public int Good { get; set; }      // >= 70
-            public int AverageGrade { get; set; }   // >= 50
-            public int Poor { get; set; }      // < 50
+            public int Excellent { get; set; } // Số lượng điểm >= 90
+            public int Good { get; set; }      // Số lượng điểm >= 70
+            public int AverageGrade { get; set; }   // Số lượng điểm >= 50
+            public int Poor { get; set; }      // Số lượng điểm < 50
         }
 
         public IActionResult GradeStatistics()
         {
-            var courses = _csvService.GetFacultyCourses(User.Identity.Name);
-            var allGradeStats = new List<(Course Course, GradeDistribution Stats)>();
+            var courses = _csvService.GetFacultyCourses(User.Identity.Name); // Lấy danh sách khóa học của giảng viên
+            var allGradeStats = new List<(Course Course, GradeDistribution Stats)>(); // Danh sách thống kê điểm
 
             foreach (var course in courses)
             {
-                var students = _csvService.GetEnrolledStudents(course.CourseId);
-                var gradeStats = new GradeDistribution();
+                var students = _csvService.GetEnrolledStudents(course.CourseId); // Lấy danh sách sinh viên đã ghi danh
+                var gradeStats = new GradeDistribution(); // Khởi tạo thống kê điểm
 
                 foreach (var student in students)
                 {
-                    var studentGrades = _csvService.GetStudentGrades(student.Username, course.CourseId);
+                    var studentGrades = _csvService.GetStudentGrades(student.Username, course.CourseId); // Lấy điểm của sinh viên
                     if (studentGrades.Any())
                     {
-                        var grade = studentGrades.First().Score;
-                        if (grade >= 90) gradeStats.Excellent++;
-                        else if (grade >= 70) gradeStats.Good++;
-                        else if (grade >= 50) gradeStats.AverageGrade++;
-                        else gradeStats.Poor++;
+                        var grade = studentGrades.First().Score; // Lấy điểm số
+                        if (grade >= 90) gradeStats.Excellent++; // Tăng số lượng điểm xuất sắc
+                        else if (grade >= 70) gradeStats.Good++; // Tăng số lượng điểm tốt
+                        else if (grade >= 50) gradeStats.AverageGrade++; // Tăng số lượng điểm trung bình
+                        else gradeStats.Poor++; // Tăng số lượng điểm kém
                     }
                 }
 
-                allGradeStats.Add((course, gradeStats));
+                allGradeStats.Add((course, gradeStats)); // Thêm thống kê vào danh sách
             }
 
-            return View(allGradeStats);
+            return View(allGradeStats); // Trả về view với danh sách thống kê
         }
     }
 }

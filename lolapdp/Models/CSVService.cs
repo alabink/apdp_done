@@ -9,14 +9,39 @@ using System.Text;
 
 namespace lolapdp.Models
 {
+    /// <summary>
+    /// Lớp CSVService thực hiện các chức năng đọc và ghi dữ liệu CSV
+    /// </summary>
     public class CSVService : ICSVService
     {
+        /// <summary>
+        /// Đường dẫn thư mục chứa dữ liệu
+        /// </summary>
         private readonly string _dataDirectory;
+
+        /// <summary>
+        /// Đường dẫn file users.csv
+        /// </summary>
         private readonly string _usersFile;
+
+        /// <summary>
+        /// Đường dẫn file courses.csv
+        /// </summary>
         private readonly string _coursesFile;
+
+        /// <summary>
+        /// Đường dẫn file enrollments.csv
+        /// </summary>
         private readonly string _enrollmentsFile;
+
+        /// <summary>
+        /// Đường dẫn file grades.csv
+        /// </summary>
         private readonly string _gradesFile;
 
+        /// <summary>
+        /// Khởi tạo đối tượng CSVService
+        /// </summary>
         public CSVService()
         {
             _dataDirectory = Path.Combine(Directory.GetCurrentDirectory(), "data");
@@ -27,6 +52,9 @@ namespace lolapdp.Models
             EnsureDirectoryExists();
         }
 
+        /// <summary>
+        /// Đảm bảo thư mục và các file CSV tồn tại
+        /// </summary>
         private void EnsureDirectoryExists()
         {
             if (!Directory.Exists(_dataDirectory))
@@ -34,31 +62,37 @@ namespace lolapdp.Models
                 Directory.CreateDirectory(_dataDirectory);
             }
 
-            // Create users.csv if not exists
+            // Tạo file users.csv nếu chưa tồn tại
             if (!File.Exists(_usersFile))
             {
                 File.WriteAllText(_usersFile, "Username,Password,Role,FullName,Email\n");
             }
 
-            // Create courses.csv if not exists
+            // Tạo file courses.csv nếu chưa tồn tại
             if (!File.Exists(_coursesFile))
             {
                 File.WriteAllText(_coursesFile, "CourseId,CourseName,Description,Credits,Faculty,IsActive\n");
             }
 
-            // Create enrollments.csv if not exists
+            // Tạo file enrollments.csv nếu chưa tồn tại
             if (!File.Exists(_enrollmentsFile))
             {
                 File.WriteAllText(_enrollmentsFile, "Username,CourseId,EnrollmentDate\n");
             }
 
-            // Create grades.csv if not exists
+            // Tạo file grades.csv nếu chưa tồn tại
             if (!File.Exists(_gradesFile))
             {
                 File.WriteAllText(_gradesFile, "Username,CourseId,Grade,GradeDate\n");
             }
         }
 
+        /// <summary>
+        /// Đọc dữ liệu từ file CSV
+        /// </summary>
+        /// <typeparam name="T">Kiểu dữ liệu của đối tượng cần đọc</typeparam>
+        /// <param name="filePath">Đường dẫn đến file CSV</param>
+        /// <returns>Danh sách các đối tượng được đọc từ file CSV</returns>
         public List<T> ReadCSV<T>(string filePath) where T : class, new()
         {
             var results = new List<T>();
@@ -95,6 +129,12 @@ namespace lolapdp.Models
             return results;
         }
 
+        /// <summary>
+        /// Ghi dữ liệu vào file CSV
+        /// </summary>
+        /// <typeparam name="T">Kiểu dữ liệu của đối tượng cần ghi</typeparam>
+        /// <param name="filePath">Đường dẫn đến file CSV</param>
+        /// <param name="data">Danh sách các đối tượng cần ghi</param>
         public void WriteCSV<T>(string filePath, List<T> data) where T : class
         {
             var properties = typeof(T).GetProperties();
@@ -110,6 +150,10 @@ namespace lolapdp.Models
             File.WriteAllLines(filePath, lines);
         }
 
+        /// <summary>
+        /// Lấy danh sách tất cả người dùng từ file CSV
+        /// </summary>
+        /// <returns>Danh sách các người dùng</returns>
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
@@ -154,33 +198,37 @@ namespace lolapdp.Models
             return users;
         }
 
+        /// <summary>
+        /// Thêm người dùng mới vào file CSV
+        /// </summary>
+        /// <param name="user">Đối tượng User cần thêm</param>
         public void AddUser(User user)
         {
             try
             {
-                // Ensure data directory exists
+                // Đảm bảo thư mục dữ liệu tồn tại
                 if (!Directory.Exists(_dataDirectory))
                 {
                     Directory.CreateDirectory(_dataDirectory);
                 }
 
-                // Create users.csv if not exists
+                // Tạo file users.csv nếu chưa tồn tại
                 if (!File.Exists(_usersFile))
                 {
                     File.WriteAllText(_usersFile, "Username,Password,Role,FullName,Email\n", Encoding.UTF8);
                 }
 
-                // Check if user already exists
+                // Kiểm tra người dùng đã tồn tại chưa
                 var users = GetAllUsers();
                 if (users.Any(u => u.Username.Equals(user.Username, StringComparison.OrdinalIgnoreCase)))
                 {
                     throw new Exception("Username already exists");
                 }
 
-                // Prepare new user data
+                // Chuẩn bị dữ liệu người dùng mới
                 var line = $"{user.Username},{user.Password},{user.Role},{user.FullName},{user.Email}\n";
                 
-                // Write data to file
+                // Ghi dữ liệu vào file
                 File.AppendAllText(_usersFile, line, Encoding.UTF8);
             }
             catch (Exception ex)
@@ -189,6 +237,10 @@ namespace lolapdp.Models
             }
         }
 
+        /// <summary>
+        /// Lấy danh sách tất cả khóa học từ file CSV
+        /// </summary>
+        /// <returns>Danh sách các khóa học</returns>
         public List<Course> GetAllCourses()
         {
             try
@@ -234,33 +286,37 @@ namespace lolapdp.Models
             }
         }
 
+        /// <summary>
+        /// Thêm khóa học mới vào file CSV
+        /// </summary>
+        /// <param name="course">Đối tượng Course cần thêm</param>
         public void AddCourse(Course course)
         {
             try
             {
-                // Ensure data directory exists
+                // Đảm bảo thư mục dữ liệu tồn tại
                 if (!Directory.Exists(_dataDirectory))
                 {
                     Directory.CreateDirectory(_dataDirectory);
                 }
 
-                // Create courses.csv if not exists
+                // Tạo file courses.csv nếu chưa tồn tại
                 if (!File.Exists(_coursesFile))
                 {
                     File.WriteAllText(_coursesFile, "CourseId,CourseName,Description,Credits,Faculty,IsActive\n", Encoding.UTF8);
                 }
 
-                // Check if course already exists
+                // Kiểm tra khóa học đã tồn tại chưa
                 var courses = GetAllCourses();
                 if (courses.Any(c => c.CourseId.Equals(course.CourseId, StringComparison.OrdinalIgnoreCase)))
                 {
-                    throw new Exception("Course ID already exists");
+                    throw new Exception("Course already exists");
                 }
 
-                // Prepare new course data
+                // Chuẩn bị dữ liệu khóa học mới
                 var line = $"{course.CourseId},{course.CourseName},{course.Description},{course.Credits},{course.Faculty},{course.IsActive}\n";
                 
-                // Write data to file
+                // Ghi dữ liệu vào file
                 File.AppendAllText(_coursesFile, line, Encoding.UTF8);
             }
             catch (Exception ex)

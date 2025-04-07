@@ -22,17 +22,17 @@ namespace lolapdp.Models
         /// <summary>
         /// Dịch vụ xác thực người dùng
         /// </summary>
-        private readonly IAuthentication _authentication;
+        
 
         /// <summary>
         /// Khởi tạo đối tượng UserManagement
         /// </summary>
         /// <param name="csvService">Dịch vụ đọc/ghi file CSV</param>
         /// <param name="authentication">Dịch vụ xác thực người dùng</param>
-        public UserManagement(ICSVService csvService, IAuthentication authentication)
+        public UserManagement(ICSVService csvService)
         {
             _csvService = csvService;
-            _authentication = authentication;
+
             _users = new List<User>();
             LoadUsers();
         }

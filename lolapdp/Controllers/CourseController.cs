@@ -4,6 +4,7 @@ using lolapdp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace lolapdp.Controllers
 {
@@ -236,5 +237,6 @@ namespace lolapdp.Controllers
 
             return RedirectToAction(nameof(Edit), new { id = courseId });
         }
+
     }
 }

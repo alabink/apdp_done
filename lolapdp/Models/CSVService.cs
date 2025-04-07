@@ -554,6 +554,7 @@ namespace lolapdp.Models
                 throw new Exception("Enrollment file not found");
             }
 
+            // Xóa thông tin đăng ký khóa học
             var lines = File.ReadAllLines(_enrollmentsFile);
             var newLines = new List<string> { lines[0] }; // Keep header
 
@@ -577,6 +578,27 @@ namespace lolapdp.Models
             }
 
             File.WriteAllLines(_enrollmentsFile, newLines);
+
+            // Xóa điểm số của sinh viên trong khóa học
+            if (File.Exists(_gradesFile))
+            {
+                var gradeLines = File.ReadAllLines(_gradesFile);
+                var newGradeLines = new List<string> { gradeLines[0] }; // Keep header
+
+                foreach (var line in gradeLines.Skip(1))
+                {
+                    var parts = line.Split(',');
+                    if (parts.Length >= 2 && 
+                        parts[0].Equals(username, StringComparison.OrdinalIgnoreCase) && 
+                        parts[1].Equals(courseId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue; // Skip this line (remove grade)
+                    }
+                    newGradeLines.Add(line);
+                }
+
+                File.WriteAllLines(_gradesFile, newGradeLines);
+            }
         }
 
         public User AuthenticateUser(string username, string password)

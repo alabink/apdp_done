@@ -1,19 +1,10 @@
-﻿namespace lolapdp.Models
+namespace lolapdp.Models
 {
     /// <summary>
-    /// Interface định nghĩa các phương thức xác thực người dùng
+    /// Interface định nghĩa các phương thức xác thực đăng nhập
     /// </summary>
-    public interface IAuthentication
+    public interface ILoginService
     {
-        /// <summary>
-        /// Đăng ký người dùng mới
-        /// </summary>
-        /// <param name="username">Tên đăng nhập</param>
-        /// <param name="password">Mật khẩu</param>
-        /// <param name="role">Vai trò của người dùng</param>
-        /// <returns>True nếu đăng ký thành công, False nếu thất bại</returns>
-        bool Register(string username, string password, string role);
-
         /// <summary>
         /// Đăng nhập người dùng
         /// </summary>
@@ -37,4 +28,3 @@
         string HashPassword(string password);
     }
 }
-//dbl

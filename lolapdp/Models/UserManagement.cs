@@ -5,9 +5,8 @@ using System.Linq;
 namespace lolapdp.Models
 {
     /// <summary>
-    /// Lớp UserManagement thực hiện các chức năng quản lý người dùng
-    /// </summary>
-    public class UserManagement : IUserManagement
+    /// Lớp UserManagement thực hiện các chức năng quản lý người dùng    /// </summary>
+    public class UserManagement : IUserManagement, IUserAuthorizationManagement, IUserProfileManagement
     {
         /// <summary>
         /// Danh sách người dùng trong hệ thống
@@ -22,7 +21,7 @@ namespace lolapdp.Models
         /// <summary>
         /// Dịch vụ xác thực người dùng
         /// </summary>
-        
+        private readonly Dictionary<int, string> _userRoles;
 
         /// <summary>
         /// Khởi tạo đối tượng UserManagement
@@ -35,6 +34,7 @@ namespace lolapdp.Models
 
             _users = new List<User>();
             LoadUsers();
+            _userRoles = new Dictionary<int, string>();
         }
 
         /// <summary>
@@ -142,5 +142,79 @@ namespace lolapdp.Models
             SaveUsers();
             return true;
         }
+
+        /// <summary>
+        /// Cập nhật quyền của người dùng
+        /// </summary>
+        /// <param name="userId">ID của người dùng</param>
+        /// <param name="newRole">Quyền mới</param>
+        /// <returns>True nếu cập nhật thành công, False nếu thất bại</returns>
+        public bool UpdateUserRole(int userId, string newRole)
+        {
+            if (!_users.Any(u => u.Id == userId))
+                return false;
+
+            _userRoles[userId] = newRole;
+            return true;
+        }
+
+        /// <summary>
+        /// Kiểm tra quyền của người dùng
+        /// </summary>
+        /// <param name="userId">ID của người dùng</param>
+        /// <param name="role">Quyền cần kiểm tra</param>
+        /// <returns>True nếu người dùng có quyền, False nếu không</returns>
+        public bool CheckUserRole(int userId, string role)
+        {
+            return _userRoles.ContainsKey(userId) && _userRoles[userId] == role;
+        }
+
+        /// <summary>
+        /// Lấy danh sách người dùng theo quyền
+        /// </summary>
+        /// <param name="role">Quyền cần lọc</param>
+        /// <returns>Danh sách người dùng có quyền được chỉ định</returns>
+        public List<User> GetUsersByRole(string role)
+        {
+            var userIds = _userRoles.Where(ur => ur.Value == role).Select(ur => ur.Key);
+            return _users.Where(u => userIds.Contains(u.Id)).ToList();
+        }
+
+        /// <summary>
+        /// Cập nhật thông tin cá nhân người dùng
+        /// </summary>
+        /// <param name="user">Đối tượng User cần cập nhật</param>
+        /// <returns>True nếu cập nhật thành công, False nếu thất bại</returns>
+        public bool UpdateUserProfile(User user)
+        {
+            return UpdateUser(user);
+        }
+
+        /// <summary>
+        /// Lấy thông tin email của người dùng
+        /// </summary>
+        /// <param name="userId">ID của người dùng</param>
+        /// <returns>Email của người dùng</returns>
+        public string GetUserEmail(int userId)
+        {
+            var user = GetUserById(userId);
+            return user?.Email;
+        }
+
+        /// <summary>
+        /// Cập nhật email của người dùng
+        /// </summary>
+        /// <param name="userId">ID của người dùng</param>
+        /// <param name="newEmail">Email mới</param>
+        /// <returns>True nếu cập nhật thành công, False nếu thất bại</returns>
+        public bool UpdateUserEmail(int userId, string newEmail)
+        {
+            var user = GetUserById(userId);
+            if (user == null)
+                return false;
+
+            user.Email = newEmail;
+            return UpdateUser(user);
+        }
     }
-} 
+}
